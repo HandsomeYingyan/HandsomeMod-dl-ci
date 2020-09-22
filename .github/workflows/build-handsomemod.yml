@@ -69,7 +69,7 @@ jobs:
       run: cd handsomemod && ./scripts/feeds install -a && ./scripts/feeds install -a
 
     - name: SSH connection to Actions
-      uses: P3TERX/debugger-action@master
+      uses: LEDE-Actions/debugger-action@master
       if: env.SSH_ACTIONS == 'true' || contains(github.event.action, 'ssh')
 
     - name: Download package
