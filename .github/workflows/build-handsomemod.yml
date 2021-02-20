@@ -39,11 +39,8 @@ jobs:
     if: github.event.repository.owner.id == github.event.sender.id
 
     steps:
-    - name: Hello World
-      if: github.event.action == 'helloworld'
-      run: |
-        echo My name is HandsomeYingyan.
-        echo Hello World!
+    - name: Cleanup Disk
+      uses: curoky/cleanup-disk-action@v2.0
           
     - name: Checkout
       uses: actions/checkout@master
