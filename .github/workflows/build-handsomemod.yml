@@ -65,8 +65,8 @@ jobs:
     - name: Install feeds
       run: cd handsomemod && ./scripts/feeds install -a
 
-    - name: SSH connection to Actions
-      uses: HandsomeYingyan/debugger-action@master
+    - name: Start SSH via tmate
+      uses: P3TERX/ssh2actions@main
       if: env.SSH_ACTIONS == 'true' || contains(github.event.action, 'ssh')
 
     - name: Download package
