@@ -24,12 +24,12 @@ on:
     types: started
 
 env:
-  REPO_URL: https://github.com/HandsomeYingyan/HandsomeMod
+  REPO_URL: https://github.com/HandsomeMod/HandsomeMod
   REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: .config
   SSH_ACTIONS: true
-  UPLOAD_BIN_DIR: false
+  UPLOAD_BIN_DIR: true
   UPLOAD_FIRMWARE: true
   TZ: Asia/Shanghai
 
@@ -63,7 +63,7 @@ jobs:
       run: cd handsomemod && ./scripts/feeds update -a
 
     - name: Install feeds
-      run: cd handsomemod && ./scripts/feeds install -a && ./scripts/feeds install -a
+      run: cd handsomemod && ./scripts/feeds install -a
 
     - name: SSH connection to Actions
       uses: HandsomeYingyan/debugger-action@master
@@ -92,13 +92,19 @@ jobs:
       with:
         name: HandsomeMod_bin
         path: HandsomeMod/bin
+      
+    - name: Upload download directory
+      uses: actions/upload-artifact@master
+      if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
+      with:
+        name: HandsomeMod_dl
+        path: HandsomeMod/dl
 
     - name: Organize files
       id: organize
       if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
         cd handsomemod/bin/targets/*/*
-        rm -rf packages
         echo "::set-env name=FIRMWARE::$PWD"
         echo "::set-output name=status::success"
 
