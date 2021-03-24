@@ -30,7 +30,7 @@ env:
   CONFIG_FILE: .config
   SSH_ACTIONS: true
   UPLOAD_BIN_DIR: true
-  UPLOAD_FIRMWARE: false
+  UPLOAD_FIRMWARE: true
   TZ: Asia/Shanghai
 
 jobs:
