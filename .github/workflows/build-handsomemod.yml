@@ -77,21 +77,6 @@ jobs:
         make download -j8
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
-
-    - name: Compile the firmware
-      id: compile
-      run: |
-        cd handsomemod
-        echo -e "$(nproc) thread compile"
-        make -j$(nproc) || make -j1 || make -j1 V=s
-        echo "::set-output name=status::success"
-
-    - name: Upload bin directory
-      uses: actions/upload-artifact@master
-      if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
-      with:
-        name: HandsomeMod_bin
-        path: HandsomeMod/bin
       
     - name: Upload download directory
       uses: actions/upload-artifact@master
@@ -104,7 +89,7 @@ jobs:
       id: organize
       if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
-        cd handsomemod/bin/targets/*/*
+        cd handsomemod/dl/*
         echo "::set-env name=FIRMWARE::$PWD"
         echo "::set-output name=status::success"
 
