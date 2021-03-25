@@ -83,4 +83,4 @@ jobs:
       if: env.UPLOAD_BIN_DIR == 'true'
       with:
         name: HandsomeMod_dl
-        path: HandsomeMod/dl
+        path: handsomemod/dl
